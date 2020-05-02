@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="MusicAlbumsPU">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <mapping-file>META-INF/mapping.xml</mapping-file>
+        <class>entity.Albums</class>
+        <class>entity.Artists</class>
+        <class>entity.Chart</class>
+        <class>entity.ChartPosition</class>
+        <properties>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://79.112.59.206:3307/music_albums_diana"/>
+            <property name="hibernate.connection.username" value="dbadiana"/>
+            <property name="hibernate.connection.password" value="pass"/>
+        </properties>
+    </persistence-unit>
+</persistence>

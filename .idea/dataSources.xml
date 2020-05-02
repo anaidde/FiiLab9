@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="music_albums_diana" uuid="a77e83d8-942f-47c7-a73e-6ce1175cd311">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://79.112.59.206:3307/music_albums_diana</jdbc-url>
+    </data-source>
+  </component>
+</project>

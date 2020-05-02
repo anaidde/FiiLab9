@@ -4,12 +4,6 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
-@Table(name = "Artists")
-@NamedQuery(
-        name = "Artists.findByName",
-        query = "SELECT a from Artists a where a.name = :name"
-)
-
 @Entity
 public class Artists {
     private int id;

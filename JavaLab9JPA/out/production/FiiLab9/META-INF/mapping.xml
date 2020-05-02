@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <named-query name="Albums.findByName">
+        <query> SELECT a from Albums a where a.name = :name </query>
+    </named-query>
+
+    <named-query name="Albums.findByArtistID">
+        <query> SELECT a from Albums a where a.artistId = :id </query>
+    </named-query>
+
+    <named-query name="Artists.findByName">
+        <query> SELECT a from Artists a where a.name = :name </query>
+    </named-query>
+
+    <entity class="entity.Albums">
+        <table name="albums" schema="music_albums_diana" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="name">
+                <column name="name"/>
+            </basic>
+            <basic name="artistId">
+                <column name="artist_id"/>
+            </basic>
+            <basic name="releaseYear">
+                <column name="release_year"/>
+            </basic>
+            <many-to-one name="artistsByArtistId" optional="true" target-entity="entity.Artists">
+                <join-column name="artist_id" nullable="false" referenced-column-name="id"/>
+            </many-to-one>
+            <one-to-many name="chartPositionsById" mapped-by="albumsByAlbumId" target-entity="entity.ChartPosition"/>
+        </attributes>
+    </entity>
+    <entity class="entity.Artists">
+        <table name="artists" schema="music_albums_diana" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="name">
+                <column name="name"/>
+            </basic>
+            <basic name="country">
+                <column name="country"/>
+            </basic>
+            <one-to-many name="albumsById" mapped-by="artistsByArtistId" target-entity="entity.Albums"/>
+        </attributes>
+    </entity>
+    <entity class="entity.Chart">
+        <table name="chart" schema="music_albums_diana" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="name">
+                <column name="name"/>
+            </basic>
+            <one-to-many name="chartPositionsById" mapped-by="chartByChartId" target-entity="entity.ChartPosition"/>
+        </attributes>
+    </entity>
+    <entity class="entity.ChartPosition">
+        <table name="chart_position" schema="music_albums_diana" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="chartId">
+                <column name="chart_id"/>
+            </basic>
+            <basic name="albumId">
+                <column name="album_id"/>
+            </basic>
+            <basic name="position">
+                <column name="position"/>
+            </basic>
+            <many-to-one name="chartByChartId" optional="true" target-entity="entity.Chart">
+                <join-column name="chart_id" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="albumsByAlbumId" optional="true" target-entity="entity.Albums">
+                <join-column name="album_id" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

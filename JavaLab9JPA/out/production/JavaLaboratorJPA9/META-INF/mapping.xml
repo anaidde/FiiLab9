@@ -2,27 +2,18 @@
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
         version="2.0">
 
-    <entity class="entity.AlbumChart">
-        <table name="album_chart" schema="music_albums_diana" catalog=""/>
-        <attributes>
-            <id name="id">
-                <column name="id"/>
-            </id>
-            <basic name="albumId">
-                <column name="album_id" insertable="false" updatable="false"/>
-            </basic>
-            <basic name="albumName">
-                <column name="album_name"/>
-            </basic>
-            <basic name="topPosition">
-                <column name="top_position"/>
-            </basic>
-            <many-to-one name="albumsByAlbumId" optional="true" target-entity="entity.Albums">
-                <join-column name="album_id" nullable="false" referenced-column-name="id"/>
-            </many-to-one>
-            <one-to-many name="chartsById" mapped-by="albumChartByAlbumChartId" target-entity="entity.Chart"/>
-        </attributes>
-    </entity>
+    <named-query name="Albums.findByName">
+        <query> SELECT a from Albums a where a.name = :name </query>
+    </named-query>
+
+    <named-query name="Albums.findByArtistID">
+        <query> SELECT a from Albums a where a.artistId = :id </query>
+    </named-query>
+
+    <named-query name="Artists.findByName">
+        <query> SELECT a from Artists a where a.name = :name </query>
+    </named-query>
+
     <entity class="entity.Albums">
         <table name="albums" schema="music_albums_diana" catalog=""/>
         <attributes>
@@ -30,7 +21,7 @@
                 <column name="id"/>
             </id>
             <basic name="name">
-                <column name="name" insertable="false" updatable="false"/>
+                <column name="name"/>
             </basic>
             <basic name="artistId">
                 <column name="artist_id" insertable="false" updatable="false"/>
@@ -38,13 +29,9 @@
             <basic name="releaseYear">
                 <column name="release_year"/>
             </basic>
-            <many-to-one name="albumChartByName" optional="true" target-entity="entity.AlbumChart">
-                <join-column name="name" nullable="false" referenced-column-name="album_name"/>
-            </many-to-one>
             <many-to-one name="artistsByArtistId" optional="true" target-entity="entity.Artists">
                 <join-column name="artist_id" nullable="false" referenced-column-name="id"/>
             </many-to-one>
-            <one-to-many name="albumChartsById" mapped-by="albumsByAlbumId" target-entity="entity.AlbumChart"/>
         </attributes>
     </entity>
     <entity class="entity.Artists">
@@ -59,7 +46,6 @@
             <basic name="country">
                 <column name="country"/>
             </basic>
-            <one-to-many name="albumsById" mapped-by="artistsByArtistId" target-entity="entity.Albums"/>
         </attributes>
     </entity>
     <entity class="entity.Chart">
@@ -71,11 +57,28 @@
             <basic name="name">
                 <column name="name"/>
             </basic>
-            <basic name="albumChartId">
-                <column name="album_chart_id" insertable="false" updatable="false"/>
+        </attributes>
+    </entity>
+    <entity class="entity.ChartPosition">
+        <table name="chart_position" schema="music_albums_diana" catalog=""/>
+        <attributes>
+            <id name="id">
+                <column name="id"/>
+            </id>
+            <basic name="chartId">
+                <column name="chart_id" insertable="false" updatable="false"/>
             </basic>
-            <many-to-one name="albumChartByAlbumChartId" optional="true" target-entity="entity.AlbumChart">
-                <join-column name="album_chart_id" nullable="false" referenced-column-name="id"/>
+            <basic name="albumId">
+                <column name="album_id" insertable="false" updatable="false"/>
+            </basic>
+            <basic name="position">
+                <column name="position"/>
+            </basic>
+            <many-to-one name="chartByChartId" optional="true" target-entity="entity.Chart">
+                <join-column name="chart_id" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="albumsByAlbumId" optional="true" target-entity="entity.Albums">
+                <join-column name="album_id" referenced-column-name="id"/>
             </many-to-one>
         </attributes>
     </entity>

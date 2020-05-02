@@ -1,11 +1,6 @@
 package repo;
-
-import entity.Albums;
-import entity.Artists;
-
+import entity.*;
 import javax.persistence.*;
-import javax.swing.text.html.parser.Entity;
-import java.util.List;
 
 public class AlbumRepository {
     public static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("MusicAlbumsPU");

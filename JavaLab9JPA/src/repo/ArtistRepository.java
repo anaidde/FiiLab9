@@ -1,7 +1,6 @@
 package repo;
 
-import entity.Albums;
-import entity.Artists;
+import entity.*;
 
 import javax.persistence.*;
 

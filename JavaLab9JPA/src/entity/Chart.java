@@ -1,14 +1,14 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Chart {
     private int id;
     private String name;
-    private Integer albumChartId;
-    private AlbumChart albumChartByAlbumChartId;
+    private Collection<ChartPosition> chartPositionsById;
 
     @Id
     @Column(name = "id")
@@ -30,38 +30,26 @@ public class Chart {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "album_chart_id")
-    public Integer getAlbumChartId() {
-        return albumChartId;
-    }
-
-    public void setAlbumChartId(Integer albumChartId) {
-        this.albumChartId = albumChartId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Chart chart = (Chart) o;
         return id == chart.id &&
-                Objects.equals(name, chart.name) &&
-                Objects.equals(albumChartId, chart.albumChartId);
+                Objects.equals(name, chart.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, albumChartId);
+        return Objects.hash(id, name);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "album_chart_id", referencedColumnName = "id")
-    public AlbumChart getAlbumChartByAlbumChartId() {
-        return albumChartByAlbumChartId;
+    @OneToMany(mappedBy = "chartByChartId")
+    public Collection<ChartPosition> getChartPositionsById() {
+        return chartPositionsById;
     }
 
-    public void setAlbumChartByAlbumChartId(AlbumChart albumChartByAlbumChartId) {
-        this.albumChartByAlbumChartId = albumChartByAlbumChartId;
+    public void setChartPositionsById(Collection<ChartPosition> chartPositionsById) {
+        this.chartPositionsById = chartPositionsById;
     }
 }

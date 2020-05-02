@@ -4,27 +4,14 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
-@Table(name = "Albums")
-@NamedQueries({
-        @NamedQuery(
-                name = "Albums.findByName",
-                query = "SELECT a from Albums a where a.name = :name"
-        ),
-        @NamedQuery(
-                name = "Albums.findByArtistID",
-                query = "SELECT a from Albums a where a.artistId = :id"
-        )
-})
-
 @Entity
 public class Albums {
     private int id;
     private String name;
     private Integer artistId;
     private Integer releaseYear;
-    private Collection<AlbumChart> albumChartsById;
-    //private AlbumChart albumChartByName;
     private Artists artistsByArtistId;
+    private Collection<ChartPosition> chartPositionsById;
 
     @Id
     @Column(name = "id")
@@ -82,25 +69,6 @@ public class Albums {
         return Objects.hash(id, name, artistId, releaseYear);
     }
 
-    @OneToMany(mappedBy = "albumsByAlbumId")
-    public Collection<AlbumChart> getAlbumChartsById() {
-        return albumChartsById;
-    }
-
-    public void setAlbumChartsById(Collection<AlbumChart> albumChartsById) {
-        this.albumChartsById = albumChartsById;
-    }
-
-//    @ManyToOne
-//    @JoinColumn(name = "name", referencedColumnName = "album_name")
-//    public AlbumChart getAlbumChartByName() {
-//        return albumChartByName;
-//    }
-//
-//    public void setAlbumChartByName(AlbumChart albumChartByName) {
-//        this.albumChartByName = albumChartByName;
-//    }
-
     @ManyToOne
     @JoinColumn(name = "artist_id", referencedColumnName = "id")
     public Artists getArtistsByArtistId() {
@@ -109,6 +77,15 @@ public class Albums {
 
     public void setArtistsByArtistId(Artists artistsByArtistId) {
         this.artistsByArtistId = artistsByArtistId;
+    }
+
+    @OneToMany(mappedBy = "albumsByAlbumId")
+    public Collection<ChartPosition> getChartPositionsById() {
+        return chartPositionsById;
+    }
+
+    public void setChartPositionsById(Collection<ChartPosition> chartPositionsById) {
+        this.chartPositionsById = chartPositionsById;
     }
 
     public String toString() {
